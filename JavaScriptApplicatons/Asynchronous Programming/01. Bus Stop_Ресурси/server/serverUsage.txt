@@ -1,0 +1,2 @@
+Github link with documentation:https://github.com/softuni-practice-server/softuni-practice-server
+how to start it(in the server folder run):node ./server.js
