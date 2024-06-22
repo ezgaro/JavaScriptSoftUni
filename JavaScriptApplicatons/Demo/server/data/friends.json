@@ -1,0 +1,34 @@
+{
+  "2d5ae478-87c7-45fa-acf9-f04aa4724421": {
+      "name": "Stefan Petrov",
+      "phone": "+1-555-7653",
+      "age": "18",
+      "work": "Software Engineer",
+      "img": "/images/sp.jpg",
+      "_id": "2d5ae478-87c7-45fa-acf9-f04aa4724421"
+  },
+  "6012c542-38e1-4660-ba40-1b109c40cb2f": {
+      "name": "Divna",
+      "phone": "+1-555-4986",
+      "age": "16",
+      "work": "Doctor",
+      "img": "/images/biba.jpg",
+      "_id": "6012c542-38e1-4660-ba40-1b109c40cb2f"
+  },
+  "d749a819-1e41-4c65-9ce2-7b429c4ebd0d": {
+      "name": "Vaseto",
+      "phone": "+1-555-9124",
+      "age": "18",
+      "work": "QA Engineer",
+      "img": "/images/va.jpg",
+      "_id": "d749a819-1e41-4c65-9ce2-7b429c4ebd0d"
+  },
+  "d749a819-1e41-4c65-9ce2-7b429c4ebd0k": {
+      "name": "Petar",
+      "phone": "+1-555-9125",
+      "age": "21",
+      "work": "Bodybuilder",
+      "img": "/images/pp.jpeg",
+      "_id": "d749a819-1e41-4c65-9ce2-7b429c4ebd0k"
+  }
+}
