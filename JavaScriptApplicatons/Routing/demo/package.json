@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "lite-server": "^2.6.1",
+    "page": "^1.11.6"
+  },
+  "scripts": {
+    "start": "lite-server"
+  }
+}
