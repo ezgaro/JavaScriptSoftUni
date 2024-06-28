@@ -13,7 +13,8 @@
   height: 380px;
 }
 
-.login-page {
+.login-page,
+.register-page {
   width: 860px;
   margin: auto;
 }

@@ -1485,7 +1485,7 @@
                     "phone": "+1-555-4986",
                     "age": "19",
                     "details": "Xd lichice ivanovo pritejava super sila da izlapva hui za 0.000124872 milisecundi.",
-                    "img": "/images/biba.jpg",
+                    "img": "/images/adame.png",
                     "_id": "6012c542-38e1-4660-ba40-1b109c40cb2f"
                 },
                 "d749a819-1e41-4c65-9ce2-7b429c4ebd0d": {

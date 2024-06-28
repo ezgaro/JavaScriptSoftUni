@@ -1,4 +1,4 @@
-import {html, render} from '../../node_modules/lit-html/lit-html.js';
+import { html, render } from "../../node_modules/lit-html/lit-html.js";
 import { fetchNibas } from '../Requsts/getNibas.js';
 
 //TODO Add group photo with some interesting interface and generate some text next to it.

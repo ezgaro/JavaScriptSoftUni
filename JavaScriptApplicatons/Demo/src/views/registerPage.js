@@ -1,13 +1,13 @@
 import { html, render } from "../../node_modules/lit-html/lit-html.js";
-import { postUsersLogin } from "../Requsts/postUsersLogin.js";
+import { postUsersRegister } from "../Requsts/postUsersRegister.js";
 
 const checkUserStatus = () => {
   const user = localStorage.getItem("user");
 
   // Hide the login menu item if the user is logged in
-  const loginMenuItem = document.querySelector('#login');
-  if (loginMenuItem) {
-    loginMenuItem.style.display = user ? 'none' : 'block';
+  const registerMenuItem = document.querySelector('#register');
+  if (registerMenuItem) {
+    registerMenuItem.style.display = user ? 'none' : 'block';
   }
   // Return the user status
   return user;
@@ -19,8 +19,8 @@ const template = () => {
     return html``; // Return an empty template
   } else {
     return html`
-      <form id="login-form">
-        <div class="login-page">
+      <form id="register-form">
+        <div class="register-page">
           <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
             <input
@@ -30,7 +30,6 @@ const template = () => {
               name="email"
               aria-describedby="emailHelp"
               placeholder="Enter email"
-              required
             />
             <small id="emailHelp" class="form-text text-muted"
               >We'll never share your email with anyone else.</small
@@ -44,41 +43,43 @@ const template = () => {
               id="exampleInputPassword1"
               name="password"
               placeholder="Password"
-              required
             />
           </div>
-          <button type="submit" class="btn btn-primary">Log in</button>
+          <button type="submit" class="btn btn-primary">Register</button>
         </div>
       </form>
     `;
   }
 };
 
-export const loginPage = () => {
+export const registerPage = () => {
   render(template(), document.querySelector("#root"));
 
-  const form = document.querySelector("#login-form");
-  if (form) {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const email = formData.get("email");
-      const password = formData.get("password");
+  const form = document.querySelector("#register-form");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const email = formData.get("email");
+    const password = formData.get("password");
+    if (email.length < 3 && password < 1) {
+      alert("Invalid email or password");
+      throw new Error("Invalid email or password");
+    }
 
-      postUsersLogin(email, password)
-        .then((data) => {
-          if (data.accessToken) {
-            localStorage.setItem("user", data.accessToken);
-            window.location.href = "/";
-          } else {
-            alert("Invalid email or password");
-          }
-        })
-        .catch((error) => {
-          console.error("Login failed", error);
-          alert("Incorrect username or password input");
-        });
-    });
-  }
+    postUsersRegister(email, password)
+      .then((data) => {
+        const registerToken = data.accessToken;
+        if (registerToken) {
+          localStorage.setItem("user", registerToken);
+          window.location.href = "/";
+        } else {
+          alert("Invalid email or password");
+        }
+      })
+      .catch((error) => {
+        console.error("Register failed", error);
+        throw Error("Invalid email or password");
+      });
+  });
 };
 checkUserStatus();

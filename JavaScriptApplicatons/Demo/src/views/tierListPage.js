@@ -1,4 +1,5 @@
-import {html, render} from '../../node_modules/lit-html/lit-html.js';
+import { html, render } from "../../node_modules/lit-html/lit-html.js";
+
 
 // TODO Add tier list img to the server.js file and populate the interface with them
 const template = () => html`
