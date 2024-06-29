@@ -1,20 +1,10 @@
 import { html, render } from "../../node_modules/lit-html/lit-html.js";
 import { postUsersRegister } from "../Requsts/postUsersRegister.js";
+import { checkUserStatus } from "../util.js";
 
-const checkUserStatus = () => {
-  const user = localStorage.getItem("user");
-
-  // Hide the login menu item if the user is logged in
-  const registerMenuItem = document.querySelector('#register');
-  if (registerMenuItem) {
-    registerMenuItem.style.display = user ? 'none' : 'block';
-  }
-  // Return the user status
-  return user;
-};
 
 const template = () => {
-  if (checkUserStatus()) {
+  if (checkUserStatus('register')) {
     window.location.href = "/"; // or any other page
     return html``; // Return an empty template
   } else {
@@ -82,4 +72,4 @@ export const registerPage = () => {
       });
   });
 };
-checkUserStatus();
+checkUserStatus('register');

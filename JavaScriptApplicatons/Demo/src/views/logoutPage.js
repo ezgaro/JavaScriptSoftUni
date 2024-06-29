@@ -1,5 +1,7 @@
 import { fetchLogout } from "../Requsts/getLogout.js";
+import { displayLogout } from '../util.js';
 
+displayLogout();
 export const logout = async () => {
   try {
     const result = await fetchLogout();
@@ -7,10 +9,9 @@ export const logout = async () => {
       const error = new Error();
       Object.assign(error, result);
       throw error;
-    };
+    }
 
     window.location.href = "/";
-
   } catch (err) {
     console.error(err);
   }
