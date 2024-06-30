@@ -1480,6 +1480,14 @@
     	furniture: {
     	},
     	friends: {
+            "6012c542-38e1-4660-ba40-1b109c40cbwjnxof": {
+                    "name": "XDGang",
+                    "phone": "+1-555-4986",
+                    "age": "19",
+                    "details": "We are nine cool niggas with big bananas from Varna (near Kamenar). We are Ivan's sons. We have three secretaries (koteshka, ulizana and glavna), one accountant-Dido the alcoholic and one sexy bitch with long curly hair-Demirov. Of course we have talisman-our dog Erik the bich fucker.",
+                    "img": "/images/together.png",
+                    "_id": "6012c542-38e1-4660-ba40-1b109c40cbwjnxof"
+                },
                 "6012c542-38e1-4660-ba40-1b109c40cb2f": {
                     "name": "Kha' damov",
                     "phone": "+1-555-4986",
