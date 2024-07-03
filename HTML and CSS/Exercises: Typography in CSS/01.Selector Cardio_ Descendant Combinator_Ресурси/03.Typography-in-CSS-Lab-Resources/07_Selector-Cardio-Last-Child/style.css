@@ -1,0 +1,4 @@
+article span:last-child {
+  font-weight: bold;
+  color: red;
+}
