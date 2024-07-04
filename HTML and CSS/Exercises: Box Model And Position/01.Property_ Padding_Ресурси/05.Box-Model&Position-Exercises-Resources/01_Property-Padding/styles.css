@@ -1,0 +1,11 @@
+p {
+  /* box-sizing: border-box;   */
+  border-style: double;
+  border-color: aliceblue;
+  padding-left: 20px;
+  padding-top: 30px;
+  padding-right: 40px;
+  padding-bottom: 50px;
+  font-weight: bold;
+  background-color: coral;
+}
