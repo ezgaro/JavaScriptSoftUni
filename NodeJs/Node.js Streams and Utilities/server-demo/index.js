@@ -22,17 +22,5 @@ http.createServer((req, res) => {
     match(req, res);
   }
 
-
-  //Tapanar strat
-  // const url = new URL(req.url, `http://${req.headers.host}`);
-  // if(url.pathname === '/') {
-  //   fs.createReadStream('./static/index.html').pipe(res);
-  // } else if(url.pathname === '/catalog') {
-  //   fs.createReadStream('./static/catalog.html').pipe(res);
-  // } else if(url.pathname == '/favicon.ico') {
-  //   fs.createReadStream('./static/favicon.ico').pipe(res);
-  // } else if(url.pathname == '/site.css') {
-  //   fs.createReadStream('./static/site.css').pipe(res);
-  // }
 }).listen(3000);
 
