@@ -14,12 +14,16 @@ let visitors = 0;
 let products = [
   { name: "Widget", price: 49 },
   { name: "Gadjet", price: 19 },
-  { name: "Fluxor", price: 13 },
+  { name: "Fluxor", price: 13 , promoted: true},
 ];
 
 app.get("/", (req, res) => {
   res.locals = {
     count: visitors++,
+    user: {
+      username: "peter",
+      email: "peter@gmail.com"
+    }
   };
   res.render("home");
 });
