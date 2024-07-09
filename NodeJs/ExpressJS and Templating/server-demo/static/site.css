@@ -1,3 +1,29 @@
 body {
   background-color: beige;
 }
+
+#content {
+  background-color: white;
+  width: 980px;
+  margin: auto;
+  padding: 32px;
+}
+
+nav li {
+  list-style: none;
+  display: inline-block;
+}
+
+nav a {
+  text-decoration: none;
+  color: blueviolet;
+  padding: 4px 8px;
+}
+
+nav a:hover {
+  color: violet;
+}
+
+nav .italic {
+  font-style: italic;
+}
