@@ -10,7 +10,9 @@ app.engine('.hbs', hbs.create({
 
 app.set('view engine', '.hbs');
 
+app.use(express.urlencoded({extended: true}));
 app.use('/content', express.static('static'));
+
 app.get('/', homeController);
 app.use('/catalog', catalogRouter);
 
