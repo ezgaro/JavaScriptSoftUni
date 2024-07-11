@@ -25,19 +25,28 @@ async function main() {
   console.log("Db connected");
   const carSchema = new mongoose.Schema({
     name: String,
-    price: Number,
+    price: {type: Number, default: 0, validate: {
+      validator: function (value) {return value >= 0}
+    },
+    message: "The price has to be positive number."
+  },
   });
+
+  carSchema.methods.startEngine = function () {
+    console.log("VROOOOM!");
+  }
 
   const Car = mongoose.model('Car', carSchema);
 
   const car = new Car({
-    name: 'VW Golf 3',
-    price: 2500
+    name: 'Nissan Micra',
+    price: -123
   });
   await car.save();
 
   const data = await Car.find({});
   console.log(data);
+  console.log(data.forEach(car => car.startEngine()));
 
 }
 
