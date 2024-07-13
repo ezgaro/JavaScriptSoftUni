@@ -12,11 +12,16 @@ app.use(expressSession({
 }));
 
 app.get('/', (req, res) => {
-  res.send('<p>Hello</p>');
+  res.sendFile('index.html');
 });
 
 app.get('/login', (req, res) => {
    res.sendFile('login.html');
+});
+
+app.post('/login', (req, res) => {
+  console.log(req.body);
+  res.redirect('/');
 })
 
 app.listen(3000)
