@@ -1,15 +1,10 @@
 const express = require('express');
 // const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
+const auth = require('./auth');
+const bcrypt = require('bcrypt');
 
 const app = express();
-
-const users = {
-  'svako': {
-    username: 'svako',
-    password: '123'
-  }
-};
 
 app.use(express.urlencoded({extended: true}));
 app.use(expressSession({
@@ -19,9 +14,9 @@ app.use(expressSession({
   cookie: { secure: false}
 }));
 
-app.get('/', (req, res) => {
-  console.log(req.session.user);
+app.use(auth());
 
+app.get('/', (req, res) => {
   const user = req.session.user || {username: 'Anonymous'};
   res.send(`<!DOCTYPE html>
     <html lang="en">
@@ -44,14 +39,11 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  const user = users[req.body.username];
-  if(user && req.body.password === user.password) {
-    console.log("Sucessfull login !!!");
-    req.session.user = user;
+  if(req.auth.login(req.body.username, req.body.password)) {
+    res.redirect('/');
   } else {
-    res.status(401).send("Incorrect username or password");
+    res.status(401).send("Incorrect username or password !");
   }
-  res.redirect('/');
 });
 
 app.get('/register', (req, res) => {
@@ -60,17 +52,11 @@ app.get('/register', (req, res) => {
 
 
 app.post('/register', (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  const repass = req.body.repass;
-  const user = {
-    username,
-    password
+  if(req.auth.register(req.body.username, req.body.password)) {
+    res.redirect('/');
+  } else {
+    res.status(409).send('Username already exists !');
   }
-  users[username] = user;
-
-  console.log(`Registered user ${username}`)
-  res.redirect('/');
 });
 
 
