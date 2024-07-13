@@ -1,7 +1,11 @@
+const bcrypt = require('bcrypt');
+
+
 const users = {
-  svako: {
+  123094: {
+    id: "123094",
     username: "svako",
-    password: "123",
+    hashedPassword: "123",
   },
 };
 
@@ -12,9 +16,9 @@ module.exports = () => (req, res, next) => {
   };
   next();
 
-  function login(username, password) {
-    const user = users[username];
-    if (user && password === user.password) {
+  async function login(username, password) {
+    const user = Object.values(users).find(u => u.username === username);
+    if (user && await bcrypt.compare(password, user.hashedPassword)) {
       console.log("Successful login !!!");
       req.session.user = user;
       return true;
@@ -23,15 +27,19 @@ module.exports = () => (req, res, next) => {
     }
   }
 
-  function register(username, password) {
-    if (users[username]) {
+  async function register(username, password) {
+    if (Object.values(users).find(u => u.username === username) !== undefined) {
       return false;
     } else {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const id = 'xxxx-xxxx'.replace(/x/g, () => Math.random() * 16 | 0).toString(16);
       const user = {
+        id,
         username,
-        password
+        hashedPassword
       };
-      users[username] = user;
+      users[id] = user;
+      req.session.user = user;
       console.log(`Registered user ${username}`);
       return true;
     }

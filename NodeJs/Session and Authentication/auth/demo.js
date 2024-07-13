@@ -38,8 +38,8 @@ app.get('/login', (req, res) => {
    res.sendFile(__dirname + '/login.html');
 });
 
-app.post('/login', (req, res) => {
-  if(req.auth.login(req.body.username, req.body.password)) {
+app.post('/login', async (req, res) => {
+  if(await req.auth.login(req.body.username, req.body.password)) {
     res.redirect('/');
   } else {
     res.status(401).send("Incorrect username or password !");
@@ -51,8 +51,8 @@ app.get('/register', (req, res) => {
 });
 
 
-app.post('/register', (req, res) => {
-  if(req.auth.register(req.body.username, req.body.password)) {
+app.post('/register', async (req, res) => {
+  if(await req.auth.register(req.body.username, req.body.password)) {
     res.redirect('/');
   } else {
     res.status(409).send('Username already exists !');
