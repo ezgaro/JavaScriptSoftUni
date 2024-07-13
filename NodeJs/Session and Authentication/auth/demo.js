@@ -28,11 +28,12 @@ app.get('/', (req, res) => {
       <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>Home</title>
       </head>
       <body>
         <p>Hello ${user.username}</p>
         <a href="/login">Login</a><br>
+        <a href="/register">Register</a><br>
       </body>
     </html>
     `);
@@ -51,6 +52,26 @@ app.post('/login', (req, res) => {
     res.status(401).send("Incorrect username or password");
   }
   res.redirect('/');
-})
+});
+
+app.get('/register', (req, res) => {
+  res.sendFile(__dirname + '/register.html');
+});
+
+
+app.post('/register', (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  const repass = req.body.repass;
+  const user = {
+    username,
+    password
+  }
+  users[username] = user;
+
+  console.log(`Registered user ${username}`)
+  res.redirect('/');
+});
+
 
 app.listen(3000)
