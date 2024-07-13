@@ -1,36 +1,45 @@
-const express = require('express');
-const hbs = require('express-handlebars');
-const { home } = require('./controllers/home');
-const { about } = require('./controllers/about');
-const create = require('./controllers/create');
-const { details } = require('./controllers/details');
-const { notFound } = require('./controllers/notFound');
-const deleteCar = require('./controllers/delete');
-const edit = require('./controllers/edit');
+const express = require("express");
+const hbs = require("express-handlebars");
+const { home } = require("./controllers/home");
+const { about } = require("./controllers/about");
+const create = require("./controllers/create");
+const { details } = require("./controllers/details");
+const { notFound } = require("./controllers/notFound");
+const deleteCar = require("./controllers/delete");
+const edit = require("./controllers/edit");
 
-const carsService = require('./services/cars');
+const carsService = require("./services/cars");
 
-const app = express();
+const initDb = require("./models/index");
 
-app.engine('hbs', hbs.create({
-  extname:'.hbs'
-}).engine);
+start();
 
-app.set('view engine', 'hbs');
+async function start() {
+  await initDb();
+  const app = express();
 
-app.use(express.urlencoded({ extended: true}));
-app.use('/static', express.static('static'));
+  app.engine(
+    "hbs",
+    hbs.create({
+      extname: ".hbs",
+    }).engine
+  );
 
-app.use(carsService());
+  app.set("view engine", "hbs");
 
-app.get('/', home);
-app.get('/about', about);
-app.get('/details/:id', details);
-app.route('/create').get(create.get).post(create.post);
-app.router('/delete/:id').get(deleteCar.get).post(deleteCar.post);
-app.route('/edit/:id', get(edit.get)).post(edit.post);
+  app.use(express.urlencoded({ extended: true }));
+  app.use("/static", express.static("static"));
 
-app.all('*', notFound);
+  app.use(carsService());
 
+  app.get("/", home);
+  app.get("/about", about);
+  app.get("/details/:id", details);
+  app.route("/create").get(create.get).post(create.post);
+  app.route("/delete/:id").get(deleteCar.get).post(deleteCar.post);
+  app.route("/edit/:id").get(edit.get).post(edit.post);
 
-app.listen(3000 , () => console.log('Server start'));
+  app.all("*", notFound);
+
+  app.listen(3000, () => console.log("Server started"));
+}
