@@ -74,6 +74,12 @@ async function start() {
   );
   app.set("view engine", "hbs");
 
+  app.use(session({
+    secret: 'my super duper secret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {secure: 'auto'},
+  }));
   app.use(express.urlencoded({ extended: true }));
   app.use("/static", express.static("static"));
   app.use(carsService());

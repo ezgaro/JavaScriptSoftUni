@@ -15,14 +15,21 @@ module.exports = {
       await req.auth.register(req.body.username, req.body.password);
       res.redirect("/");
     } catch (error) {
-      res.redirect('/register');
+      console.error(error.message);
+      res.redirect("/register");
     }
   },
   loginGet(req, res) {
     res.render("login", { title: "Login" });
   },
-  loginPost(req, res) {
-    res.redirect("/");
+  async loginPost(req, res) {
+    try {
+      await req.auth.login(req.body.username, req.body.password);
+      res.redirect("/");
+    } catch (error) {
+      console.error(error.message);
+      res.redirect("/login");
+    }
   },
   logoutGet(req, res) {},
 };
