@@ -54,10 +54,11 @@ const {
   registerPost,
   loginGet,
   loginPost,
-  logoutGet,
+  logout,
 } = require("./controllers/auth");
 
 const { notFound } = require("./controllers/notFound");
+const { isLoggedIn } = require("./services/util");
 
 start();
 
@@ -90,19 +91,21 @@ async function start() {
   app.get("/about", about);
   app.get("/details/:id", details);
 
-  app.route("/create").get(create.get).post(create.post);
+  app.route("/create").get(isLoggedIn(), create.get).post(isLoggedIn(), create.post);
 
-  app.route("/delete/:id").get(deleteCar.get).post(deleteCar.post);
+  app.route("/delete/:id").get(isLoggedIn(), deleteCar.get).post(isLoggedIn(), deleteCar.post);
 
-  app.route("/edit/:id").get(edit.get).post(edit.post);
+  app.route("/edit/:id").get(isLoggedIn(), edit.get).post(isLoggedIn(), edit.post);
 
-  app.route("/accessory").get(accessory.get).post(accessory.post);
+  app.route("/accessory").get(isLoggedIn(), accessory.get).post(isLoggedIn(), accessory.post);
 
-  app.route("/attach/:id").get(attach.get).post(attach.post);
+  app.route("/attach/:id").get(isLoggedIn(), attach.get).post(isLoggedIn(), attach.post);
 
   app.route("/register").get(registerGet).post(registerPost);
 
   app.route("/login").get(loginGet).post(loginPost);
+
+  app.get('/logout', logout);
 
   app.all("*", notFound);
 
