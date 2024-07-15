@@ -6,9 +6,6 @@ module.exports = {
         if(req.session.user && req.session.user.id == car.owner) {
             car.isOwner = true;
         }
-
-        console.log(car);
-
         if (car) {
             res.render('details', { title: `Carbicle - ${car.name}`, car });
         } else {

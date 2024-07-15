@@ -13,7 +13,6 @@ userSchema.methods.comparePassword = async function (password) {
 
 userSchema.pre('save', async function (next) {
   if(this.isModified('hashedPassword')) {
-    console.log('hashing new password');
     this.hashedPassword = await hashPassword(this.hashedPassword);
   }
   next();
