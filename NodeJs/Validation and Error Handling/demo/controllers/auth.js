@@ -1,22 +1,21 @@
+const { validationResult } = require("express-validator");
+
 module.exports = {
   registerGet(req, res) {
     res.render("register", { title: "Register" });
   },
   async registerPost(req, res) {
-    if (req.body.username == "" || req.body.password == "") {
-      return res.redirect("/register");
-    }
-
-    if (req.body.password != req.body.repeatPassword) {
-      return res.redirect("/register");
-    }
+    const { errors } = validationResult(req);
 
     try {
+      if (errors.length > 0) {
+        throw errors;
+      }
       await req.auth.register(req.body.username, req.body.password);
       res.redirect("/");
-    } catch (error) {
-      console.error(error.message);
-      res.redirect("/register");
+    } catch (errors) {
+      console.error(errors);
+      res.render("register", { title: "Register", errors , data: {username: req.body.username}});
     }
   },
   loginGet(req, res) {
@@ -27,12 +26,12 @@ module.exports = {
       await req.auth.login(req.body.username, req.body.password);
       res.redirect("/");
     } catch (error) {
-      console.error(error.message);
+      console.error(error);
       res.redirect("/login");
     }
   },
   logout(req, res) {
     req.auth.logout();
-    res.redirect('/')
+    res.redirect("/");
   },
 };
