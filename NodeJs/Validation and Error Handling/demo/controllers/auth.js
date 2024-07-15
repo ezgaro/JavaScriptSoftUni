@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { body, validationResult } = require("express-validator");
+const { mapError } = require("../services/util");
 
 const router = Router();
 
@@ -22,7 +23,9 @@ router.post(
     .withMessage("Password must be atleast 8 charackters long.")
     .isAlphanumeric()
     .withMessage("Password may be only alphanumeric characters."),
-  body("repeatPassword").custom((value, { req }) => value == req.body.password),
+  body("repeatPassword")
+    .custom((value, { req }) => value == req.body.password)
+    .withMessage("Passwords don't match"),
   async (req, res) => {
     const { errors } = validationResult(req);
     try {
@@ -33,8 +36,11 @@ router.post(
       res.redirect("/");
     } catch (err) {
       console.error(err.message);
-      res.locals.errors = err;
-      res.render("register", { title: "Register" });
+      res.locals.errors = mapError(err);
+      res.render("register", {
+        title: "Register",
+        data: { username: req.body.username },
+      });
     }
   }
 );
@@ -47,9 +53,10 @@ router.post("/login", async (req, res) => {
   try {
     await req.auth.login(req.body.username, req.body.password);
     res.redirect("/");
-  } catch (error) {
-    console.error(error);
-    res.redirect("/login");
+  } catch (err) {
+    res.locals.errors = [{msg: err.message} ];
+    console.error(err);
+    res.render("login", { title: "Login" });
   }
 });
 
