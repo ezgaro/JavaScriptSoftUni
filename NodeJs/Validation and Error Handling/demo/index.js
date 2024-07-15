@@ -124,17 +124,24 @@ async function start() {
     .route("/register")
     .get(registerGet)
     .post(
-      body("username", "Username is required")
+      body("username").trim(),
+      body("password").trim(),
+      body("repeatPassword").trim(),
+      body("username")
         .isLength({ min: 3 })
         .withMessage("Username must be atleast 3 characters long")
         .isAlphanumeric()
         .withMessage("Username may contain only letters and numbers"),
       body("password")
+        .trim()
         .notEmpty()
-        .withMessage("Username is required")
+        .withMessage("Password is required")
         .isLength({ min: 6 })
         .withMessage("Password must be atleast 6 characters long"),
-      body("repeatPassword").custom((value, {req}) => value == req.body.password ).withMessage('Password don/t match'),
+      body("repeatPassword")
+        .trim()
+        .custom((value, { req }) => value == req.body.password)
+        .withMessage("Password don/t match"),
       registerPost
     );
 
