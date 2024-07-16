@@ -21,8 +21,8 @@
             <div class="social-btn">
 
               {{#if isAuthor}}
-                <a href="#" class="edit-btn">Edit</a>
-                <a href="#" class="del-btn">Delete</a>
+                <a href="/edit/{{_id}}" class="edit-btn">Edit</a>
+                <a href="/delete/{{_id}}" class="del-btn">Delete</a>
               {{else}}
 
                 {{#if hasVoted}}

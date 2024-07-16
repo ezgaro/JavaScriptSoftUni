@@ -22,7 +22,6 @@ router.get('/catalog/:id', async (req, res) => {
       post.isAuthor = true;
     }
   }
-  console.log(req.session.user);
   res.render('details', {title: post.title, post})
 })
 
