@@ -15,9 +15,14 @@ router.get('/catalog', async (req, res) => {
 router.get('/catalog/:id', async (req, res) => {
   const id = req.params.id;
   const post = postViewModel(await getPostById(id));
-  if(req.session.user && req.session.user._id == post.author._id) {
-    post.isAuthor = true;
+  if(req.session.user) {
+    post.hasUser = true;
+    // Check if req.session.user exists before accessing _id
+    if(req.session.user._id == post.author._id) {
+      post.isAuthor = true;
+    }
   }
+  console.log(req.session.user);
   res.render('details', {title: post.title, post})
 })
 
