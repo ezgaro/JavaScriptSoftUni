@@ -1,47 +1,47 @@
-const User = require('../models/User');
-const {compare, hash} = require('bcrypt');
+const User = require("../models/User");
+const { compare, hash } = require("bcrypt");
 
-async function register(username, password) {
-  const existing = await getUserByUsername(username);
+async function register(firstName, lastName, email, password) {
+  const existing = await getUserByEmail(email);
 
-  if(existing) {
-    throw new Error('Username is taken');
+  if (existing) {
+    throw new Error("Username is taken");
   }
 
   const hashedPassword = await hash(password, 10);
   const user = new User({
-    username,
-    hashedPassword
+    firstName,
+    lastName,
+    email,
+    hashedPassword,
   });
   await user.save();
 
   return user;
-
 }
 
-async function login(username, password) {
-  const user = await getUserByUsername(username);
+async function login(email, password) {
+  const user = await getUserByEmail(email);
 
-  if(!user) {
-    throw new Error('Incorrect username or password!');
+  if (!user) {
+    throw new Error("Incorrect email or password!");
   }
 
   const hasMatch = await compare(password, user.hashedPassword);
 
-  if(!hasMatch) {
-    throw new Error('Incorrect username or password!');
+  if (!hasMatch) {
+    throw new Error("Incorrect email or password!");
   }
 
   return user;
-
 }
 
-async function getUserByUsername(username) {
-  const user = await User.findOne({ username: new RegExp(`^${username}$`, 'i')});
+async function getUserByEmail(email) {
+  const user = await User.findOne({ email: new RegExp(`^${email}$`, "i") });
   return user;
 }
 
 module.exports = {
   login,
-  register
-}
+  register,
+};
