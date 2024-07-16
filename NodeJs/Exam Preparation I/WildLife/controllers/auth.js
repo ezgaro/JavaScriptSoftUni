@@ -1,6 +1,6 @@
 const { isUser, isGuest } = require("../middleware/guards");
 const { register, login } = require("../services/user");
-const mapErrors = require("../util/mappers");
+const {mapErrors} = require("../util/mappers");
 
 const router = require("express").Router();
 
@@ -10,7 +10,9 @@ router.get("/register", isGuest(),(req, res) => {
 
 router.post("/register", isGuest(),async (req, res) => {
   try {
-    if (req.body.password != req.body.repass) {
+    if(req.body.password.trim() == '') {
+      throw new Error("Password is required!");
+    } else if (req.body.password != req.body.repass) {
       throw new Error("Passwords don't match");
     }
     const user = await register(req.body.firstName, req.body.lastName, req.body.email, req.body.password);
