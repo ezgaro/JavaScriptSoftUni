@@ -1,13 +1,14 @@
+const { isUser, isGuest } = require("../middleware/guards");
 const { register, login } = require("../services/user");
 const mapErrors = require("../util/mappers");
 
 const router = require("express").Router();
 
-router.get("/register", (req, res) => {
+router.get("/register", isGuest(),(req, res) => {
   res.render("register");
 });
 
-router.post("/register", async (req, res) => {
+router.post("/register", isGuest(),async (req, res) => {
   try {
     if (req.body.password != req.body.repass) {
       throw new Error("Passwords don't match");
@@ -22,12 +23,12 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.get("/login", (req, res) => {
+router.get("/login", isGuest() ,(req, res) => {
   res.render("login");
 });
 
 
-router.post('/login', async (req, res) => {
+router.post('/login', isGuest(),async (req, res) => {
    try {
     const user = await login(req.body.username, req.body.password);
     req.session.user = user;
@@ -37,6 +38,11 @@ router.post('/login', async (req, res) => {
   res.render("login", {data: {username: req.body.username} , errors});
     console.log(error);
    }
+})
+
+router.get('/logout', isUser(),(req, res) => {
+  delete req.session.user;
+  res.redirect('/');
 })
 
 module.exports = router;

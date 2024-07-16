@@ -1,6 +1,7 @@
 const express = require("express");
 const hbs = require("express-handlebars");
 const session = require("express-session");
+const userSession = require("../middleware/userSession");
 
 module.exports = (app) => {
   app.engine(
@@ -25,4 +26,5 @@ module.exports = (app) => {
   );
 
   app.use(express.urlencoded({ extended: true }));
+  app.use(userSession());
 };
