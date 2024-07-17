@@ -1,8 +1,11 @@
+const { isUser } = require("../middlewares/guards");
 const { createTrip } = require("../services/trip");
 
 const router = require("express").Router();
 
-router.post("/trip-create", async (req, res) => {
+router.post("/trip-create", isUser(),async (req, res) => {
+  const userId = req.session.user._id;
+  console.log(req.session);
   const trip = {
     startPoint: req.body.startPoint,
     endPoint: req.body.endPoint,
@@ -12,6 +15,7 @@ router.post("/trip-create", async (req, res) => {
     carBrand: req.body.carBrand,
     seats: req.body.seats,
     price: req.body.price,
+    creator: userId,
     description: req.body.description,
   };
 

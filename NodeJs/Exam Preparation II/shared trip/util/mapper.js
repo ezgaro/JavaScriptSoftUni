@@ -9,7 +9,14 @@ function tripViewModel(trip) {
     carBrand: trip.carBrand,
     seats: trip.seats,
     price: trip.price,
+    creator: creatorViewModel(trip.creator),
     description: trip.description,
+  }
+};
+
+function creatorViewModel(user) {
+  return {
+    _id: user._id,
   }
 }
 

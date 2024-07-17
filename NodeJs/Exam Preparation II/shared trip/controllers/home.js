@@ -1,5 +1,6 @@
 const { getTrips } = require('../services/trip');
 const { tripViewModel } = require('../util/mapper');
+const {isUser} = require('../middlewares/guards');
 
 const router = require('express').Router();
 
@@ -12,8 +13,10 @@ router.get('/shared-trips', async (req, res) => {
   res.render('shared-trips', {title: 'Shared Trips', trips});
 });
 
-router.get('/trip-create', (req, res) => {
+router.get('/trip-create', isUser(),(req, res) => {
   res.render('trip-create', {title: 'Trip Create'});
 });
+
+
 
 module.exports = router;
