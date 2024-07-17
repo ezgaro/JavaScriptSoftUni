@@ -11,8 +11,14 @@ async function getTrips() {
   return Trip.find({});
 }
 
+async function getTripById(id) {
+  return Trip.findById(id).populate('creator', 'email');
+}
+
+
 
 module.exports = {
   createTrip,
-  getTrips
+  getTrips,
+  getTripById
 }

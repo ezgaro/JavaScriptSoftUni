@@ -16,7 +16,7 @@ function tripViewModel(trip) {
 
 function creatorViewModel(user) {
   return {
-    _id: user._id,
+    email: user.email,
   }
 }
 
