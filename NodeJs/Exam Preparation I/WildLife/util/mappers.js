@@ -15,6 +15,15 @@ function mapErrors(err) {
 }
 
 function postViewModel(post) {
+  if (!post.votes) {
+    console.error("post.votes is undefined", post);
+    post.votes = [];
+  }
+
+  // Filter out null values from the votes array
+  const validVotes = post.votes.filter(vote => vote !== null);
+
+
   return {
     _id: post._id,
     title: post.title,
@@ -24,7 +33,7 @@ function postViewModel(post) {
     image: post.image,
     description: post.description,
     author: authorViewModel(post.author),
-    votes: post.votes,
+    votes: validVotes.map(voterViewModel),
     rating: post.rating,
   };
 };
@@ -35,6 +44,13 @@ function authorViewModel(user) {
     firstName: user.firstName,
     lastName: user.lastName
   }
+};
+
+function voterViewModel(user) {
+  return {
+    _id: user._id,
+    email: user.email,
+  };
 }
 
 module.exports = { mapErrors, postViewModel };
