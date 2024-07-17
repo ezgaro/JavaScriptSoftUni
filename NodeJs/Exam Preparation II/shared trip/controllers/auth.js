@@ -14,7 +14,6 @@ router.post("/register", isGuest(), async (req, res) => {
     } else if (req.body.password != req.body.repass) {
       throw new Error("Passwords don't match");
     }
-    console.log(req.body);
     const user = await register(
       req.body.email,
       req.body.password,
