@@ -39,10 +39,15 @@ async function pushTripToTripHistory(id, savedTrip) {
     {$push: {tripHistory: savedTrip._id}},
     { new: true, useFindAndModify: false }
   );
+};
+
+async function getUserEmailById(id) {
+  return await User.findById(id).select('email');
 }
 
 module.exports = {
   register,
   login,
-  pushTripToTripHistory
+  pushTripToTripHistory,
+  getUserEmailById
 };

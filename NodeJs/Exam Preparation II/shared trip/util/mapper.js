@@ -1,4 +1,5 @@
 function tripViewModel(trip) {
+  const bud = trip.buddies;
   return {
     _id: trip.id,
     startPoint: trip.startPoint,
@@ -11,6 +12,7 @@ function tripViewModel(trip) {
     price: trip.price,
     creator: creatorViewModel(trip.creator),
     description: trip.description,
+    buddies: bud.map(tripBuddiesViewModel),
   };
 }
 
@@ -27,6 +29,12 @@ function userViewModel(user) {
 function tripHistoryViewModel(trip) {
   return {
     _id: trip._id
+  }
+}
+
+function tripBuddiesViewModel(user) {
+  return {
+    _id: user._id
   }
 }
 

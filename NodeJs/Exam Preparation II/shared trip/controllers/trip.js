@@ -22,7 +22,7 @@ router.post("/trip-create", isUser(), async (req, res) => {
 
   try {
     const savedTrip = await createTrip(trip);
-    pushTripToTripHistory(req.session.user._id, savedTrip);
+    await pushTripToTripHistory(req.session.user._id, savedTrip);
     res.redirect("/shared-trips");
   } catch (error) {
     console.error(error);
@@ -88,12 +88,11 @@ router.get('/delete/:id', isUser(), async (req, res) => {
 });
 
 
-
-router.get('/shared-trips/:id', async (req, res) => {
+router.get('/join/:id', isUser(),async (req, res) => {
   const tripId = req.params.id;
-  console.log(req.session.user);
   try {
     await joinTrip(tripId, req.session.user._id);
+    res.redirect('/shared-trips/' + tripId);
   } catch (error) {
     console.error(error);
     res.render('trip-details', {title: 'Deatails Page'});

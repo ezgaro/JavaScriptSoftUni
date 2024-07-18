@@ -13,7 +13,7 @@ async function getTrips() {
 }
 
 async function getTripById(id) {
-  return Trip.findById(id).populate('creator', 'email _id');
+  return Trip.findById(id).populate('creator', 'email _id').populate('buddies', 'email _id');
 }
 
 async function updateTrip(id, newTrip) {
@@ -36,8 +36,9 @@ async function deleteTrip(id) {
 }
 
 async function joinTrip(tripId, userId) {
-  const trip = Trip.findById(tripId);
+  const trip = await Trip.findById(tripId);
   if(!trip) {
+    console.error('This trip don\'t exitst!');
     return;
   }
 
