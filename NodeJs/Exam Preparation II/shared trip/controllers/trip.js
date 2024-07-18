@@ -1,5 +1,6 @@
 const { isUser } = require("../middlewares/guards");
-const { createTrip, getTripById, updateTrip, deleteTrip } = require("../services/trip");
+const { createTrip, getTripById, updateTrip, deleteTrip, joinTrip } = require("../services/trip");
+const { pushTripToTripHistory } = require("../services/user");
 const { tripViewModel } = require("../util/mapper");
 
 const router = require("express").Router();
@@ -20,7 +21,8 @@ router.post("/trip-create", isUser(), async (req, res) => {
   };
 
   try {
-    await createTrip(trip);
+    const savedTrip = await createTrip(trip);
+    pushTripToTripHistory(req.session.user._id, savedTrip);
     res.redirect("/shared-trips");
   } catch (error) {
     console.error(error);
@@ -83,7 +85,19 @@ router.get('/delete/:id', isUser(), async (req, res) => {
     console.error(error);
     res.render("trip-edit", { title: "Edit Page", existing });
   }
-
 });
+
+
+
+router.get('/shared-trips/:id', async (req, res) => {
+  const tripId = req.params.id;
+  console.log(req.session.user);
+  try {
+    await joinTrip(tripId, req.session.user._id);
+  } catch (error) {
+    console.error(error);
+    res.render('trip-details', {title: 'Deatails Page'});
+  }
+})
 
 module.exports = router;

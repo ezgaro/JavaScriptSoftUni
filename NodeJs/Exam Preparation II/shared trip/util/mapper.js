@@ -14,6 +14,22 @@ function tripViewModel(trip) {
   };
 }
 
+function userViewModel(user) {
+  const tripHis = user.tripHistory;
+  return {
+    _id: user.id,
+    email: user.email,
+    gender: user.gender,
+    tripHistory: tripHis.map(tripHistoryViewModel)
+  }
+}
+
+function tripHistoryViewModel(trip) {
+  return {
+    _id: trip._id
+  }
+}
+
 function creatorViewModel(user) {
   return {
     _id: user._id,
@@ -23,4 +39,5 @@ function creatorViewModel(user) {
 
 module.exports = {
   tripViewModel,
+  userViewModel
 };

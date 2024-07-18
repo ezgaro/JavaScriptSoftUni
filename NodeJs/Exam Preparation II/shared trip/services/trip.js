@@ -2,7 +2,8 @@ const Trip = require('../models/Trip');
 
 
 async function createTrip(trip) {
-  const result = await new Trip(trip);
+  const result = new Trip(trip);
+
   await result.save();
   return result;
 };
@@ -34,6 +35,20 @@ async function deleteTrip(id) {
   return await Trip.findByIdAndDelete(id);
 }
 
+async function joinTrip(tripId, userId) {
+  const trip = Trip.findById(tripId);
+  if(!trip) {
+    return;
+  }
+
+  if(trip.buddies.includes(userId)) {
+    throw new Error("User has already voted");
+  }
+
+  trip.buddies.push(userId);
+  trip.seats--;
+  await trip.save();
+}
 
 
 module.exports = {
@@ -41,5 +56,6 @@ module.exports = {
   getTrips,
   getTripById,
   updateTrip,
-  deleteTrip
+  deleteTrip,
+  joinTrip
 }

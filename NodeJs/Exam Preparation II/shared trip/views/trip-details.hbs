@@ -46,7 +46,9 @@
               <a href="/edit/{{_id}}" class="btn btn-warning">Edit this trip</a>
             {{else}}
               <!-- logged in user with available seats -->
-              <a href="" class="btn btn-join">Join now, [ 1 ] seats left!</a>
+              <a href="/shared-trips/{{_id}}" class="btn btn-join">Join now, [
+                {{seats}}
+                ] seats left!</a>
 
               <!-- logged in user and has already joined the trip  -->
               <span class="btn btn-info">Already joined. Don't be late!</span>

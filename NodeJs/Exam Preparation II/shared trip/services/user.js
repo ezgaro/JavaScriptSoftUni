@@ -33,7 +33,16 @@ async function getUserByEmail(email) {
   return await User.findOne({ email: new RegExp(`^${email}$`, "i") });
 }
 
+async function pushTripToTripHistory(id, savedTrip) {
+  await User.findByIdAndUpdate(
+    id,
+    {$push: {tripHistory: savedTrip._id}},
+    { new: true, useFindAndModify: false }
+  );
+}
+
 module.exports = {
   register,
   login,
+  pushTripToTripHistory
 };
