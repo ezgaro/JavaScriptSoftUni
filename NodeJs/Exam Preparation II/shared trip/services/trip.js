@@ -30,11 +30,16 @@ async function updateTrip(id, newTrip) {
   await existing.save();
 }
 
+async function deleteTrip(id) {
+  return await Trip.findByIdAndDelete(id);
+}
+
 
 
 module.exports = {
   createTrip,
   getTrips,
   getTripById,
-  updateTrip
+  updateTrip,
+  deleteTrip
 }
