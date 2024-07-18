@@ -42,9 +42,14 @@ async function pushTripToTripHistory(id, savedTrip) {
 };
 
 async function getUserEmailById(id) {
-  return await User.findById(id).select('email');
+  try {
+    const user = await User.findById(id).select('email');
+    return user ? user.email : null;
+  } catch (error) {
+    console.error(`Error fetching user with ID ${id}:`, error);
+    return null;
+  }
 }
-
 module.exports = {
   register,
   login,

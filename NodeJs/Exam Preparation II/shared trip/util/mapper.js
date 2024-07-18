@@ -1,3 +1,5 @@
+const { getUserEmailById } = require("../services/user");
+
 function tripViewModel(trip) {
   const bud = trip.buddies;
   return {
@@ -45,7 +47,30 @@ function creatorViewModel(user) {
   };
 }
 
+function seatsFixer(seats, flag) {
+  flag = true;
+  if(seats < 1) {
+    flag = false;
+  }
+}
+
+async function objectIdToEmail(buddiesIds) {
+  try {
+    const emailPromises = buddiesIds.map(async (buddy) => {
+      const email = await getUserEmailById(buddy._id);
+      return email;
+    });
+    const emails = await Promise.all(emailPromises);
+    return emails.filter(email => email !== null);
+  } catch (error) {
+    console.error('Error converting objectIds to emails:', error);
+    return [];
+  }
+}
+
 module.exports = {
   tripViewModel,
-  userViewModel
+  userViewModel,
+  seatsFixer,
+  objectIdToEmail
 };

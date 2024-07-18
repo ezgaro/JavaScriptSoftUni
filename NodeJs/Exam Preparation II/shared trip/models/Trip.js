@@ -12,7 +12,7 @@ const tripSchema = new Schema({
   price :  {type: Number ,required: [true, 'The Price field have to be filled']},
   description :  {type: String ,required: [true, 'The Description field have to be filled']},
   creator : {type: ObjectId, ref: "User", required: true },
-  buddies : { type: [ObjectId], ref: "User" , default: []} //When a user joined the given trip, a reference to that user is added to that collection (Buddies).
+  buddies : { type: [ObjectId], ref: "User" , default: []}
 });
 
 const Trip = model('Trip', tripSchema);
