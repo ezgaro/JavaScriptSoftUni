@@ -12,7 +12,7 @@ async function getTrips() {
 }
 
 async function getTripById(id) {
-  return Trip.findById(id).populate('creator', 'email');
+  return Trip.findById(id).populate('creator', 'email _id');
 }
 
 

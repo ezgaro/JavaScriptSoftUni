@@ -1,5 +1,5 @@
 const { getTrips, getTripById } = require("../services/trip");
-const { tripViewModel } = require("../util/mapper");
+const { tripViewModel, objectIdExtraction } = require("../util/mapper");
 const { isUser } = require("../middlewares/guards");
 
 const router = require("express").Router();
@@ -21,7 +21,15 @@ router.get("/shared-trips/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const trip = tripViewModel(await getTripById(id));
-    res.render("trip-details", { title: trip.title, ...trip });
+    const creatorId = trip.creator._id.toString();
+    req.session.hasUser = req.session.isCreator = false;
+    if(req.session.user) {
+      req.session.hasUser = true;
+      if(req.session.user._id.toString() == creatorId) {
+        req.session.isCreator = true;
+      }
+    }
+    res.render("trip-details", { title: trip.title, ...trip, hasUser: req.session.hasUser, isCreator: req.session.isCreator });
   } catch (error) {
     console.error(error);
     res.status(500).send('Server Error');

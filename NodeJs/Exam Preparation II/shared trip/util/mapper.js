@@ -1,5 +1,5 @@
 function tripViewModel(trip) {
-   return  {
+  return {
     _id: trip.id,
     startPoint: trip.startPoint,
     endPoint: trip.endPoint,
@@ -11,15 +11,16 @@ function tripViewModel(trip) {
     price: trip.price,
     creator: creatorViewModel(trip.creator),
     description: trip.description,
-  }
-};
+  };
+}
 
 function creatorViewModel(user) {
   return {
+    _id: user._id,
     email: user.email,
-  }
+  };
 }
 
 module.exports = {
-  tripViewModel
-}
+  tripViewModel,
+};

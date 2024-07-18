@@ -5,7 +5,6 @@ const router = require("express").Router();
 
 router.post("/trip-create", isUser(),async (req, res) => {
   const userId = req.session.user._id;
-  console.log(req.session);
   const trip = {
     startPoint: req.body.startPoint,
     endPoint: req.body.endPoint,
